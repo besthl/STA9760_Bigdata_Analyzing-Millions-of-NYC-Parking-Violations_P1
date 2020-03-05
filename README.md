@@ -5,4 +5,4 @@ docker build -t bigdata1:2.0 .
 ___________________________
 docker run -e APP_KEY={YOUR_APP_KEY} -t bigdata1:2.0 python -m main --page_size=1000 --num_pages=4 --output=results.json
 ___________________________
-docker login --username=besthl docker images docker tag e9ccc9990668 besthl/bigdata1:1.0 docker push besthl/bigdata1
+docker login --username=besthl docker images docker tag e9ccc9990668 besthl/bigdata1:2.0 docker push besthl/bigdata1
