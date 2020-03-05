@@ -7,6 +7,19 @@ class Function(object):
 	def __enter__(self):
 		return self
 
+	'''def get_info (self, location="nc67-uf89", limit=10):
+		try:
+			print(f"location={location}, limit={str(limit)}")
+			return self.client.get(location, limit=limit)
+		except HTTPError as e:
+			print(f"Failed to make API call: {e}")
+			raise
+		except KeyError as e:
+			print(f"Failed to get info from response: {e}")
+			raise
+		except Exception as e:
+			print(f"Something went wrong: {e}")
+			raise'''
 
 	def get_info(self, location="nc67-uf89", limit=10, offset=10):
 		#print(f"limit={str(limit)}, offset={str(offset)}")
