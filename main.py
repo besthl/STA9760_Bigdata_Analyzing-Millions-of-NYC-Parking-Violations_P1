@@ -1,21 +1,20 @@
 from sys import argv
 from src.OPCV.getdata import Function
 from os import environ
+from math import ceil
 
 if __name__ == "__main__":
     app_key = environ.get("APP_KEY")
     #print page_size and num_pages
     page_size_str = argv[1]
     page_size = int(page_size_str.split('=')[1])
-    #num_pages_str = argv[2]
-    #num_pages = int(num_pages_str.split('=')[1])
+    try:
+        num_pages_str = argv[2]
+        num_pages = int(num_pages_str.split('=')[1])
+    except Exception:
+        num_pages = None
     
     #print output
-    try: num_pages_str = argv[2]
-        num_pages = int(num_pages_str.split('=')[1])
-    
-    except:Exception:
-        num_pages_str =  None
     try:
         output = argv[3]
 
@@ -23,27 +22,28 @@ if __name__ == "__main__":
         output = None
     location = 'nc67-uf89'
 
-    limit_size = int(page_size / num_pages)
+    #limit_size = int(page_size / num_pages)
 
     if output is None:
         with Function(app_key) as function:
-            total_size = function.get_size(location)
-            #print(function.get_info(location, limit_size))
-            offset = 0
-            for i in range(num_pages-1):
-                offset += limit_size
-                if offset >= total_size:
-                    break;
-                #print(function.get_next_info(location, limit_size, offset))
-                
+            if num_pages == None: 
+                total_size = function.get_size(location)
+                num_pages = ceil(total_size / page_size)
+            print (f'num_pages = {num_pages}')
+            print (f'page_size = {page_size}')
+            h = input("Press 'Enter' to continue...")
+
+            for i in range(num_pages):
+                print(function.get_info(location, page_size, offset=i*num_pages))
     else:
         output = output.split("=")[1]
         with Function(app_key) as function, open(output, "w") as fw:
-            total_size = function.get_size(location)
-            fw.write(f"{function.get_info(location, limit_size)}\n")
-            offset = 0
+            if num_pages == None: 
+                total_size = function.get_size(location)
+                num_pages = ceil(total_size / page_size)
+            print (f'num_pages = {num_pages}')
+            print (f'page_size = {page_size}')
+            h = input("Press 'Enter' to continue...")
+
             for i in range(num_pages-1):
-                offset += limit_size
-                if offset >= total_size:
-                    break;
-                fw.write(f"{function.get_next_info(location, limit_size, offset)}\n")
+                fw.write(f"{function.get_info(location, page_size, offset=i*num_pages)}\n")
