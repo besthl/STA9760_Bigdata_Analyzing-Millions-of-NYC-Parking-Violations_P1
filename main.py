@@ -45,5 +45,5 @@ if __name__ == "__main__":
             print (f'page_size = {page_size}')
             h = input("Press 'Enter' to continue...")
 
-            for i in range(num_pages-1):
+            for i in range(num_pages):
                 fw.write(f"{function.get_info(location, page_size, offset=i*num_pages)}\n")
