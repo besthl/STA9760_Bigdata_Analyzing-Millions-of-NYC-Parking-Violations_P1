@@ -7,10 +7,15 @@ if __name__ == "__main__":
     #print page_size and num_pages
     page_size_str = argv[1]
     page_size = int(page_size_str.split('=')[1])
-    num_pages_str = argv[2]
-    num_pages = int(num_pages_str.split('=')[1])
+    #num_pages_str = argv[2]
+    #num_pages = int(num_pages_str.split('=')[1])
     
     #print output
+    try: num_pages_str = argv[2]
+        num_pages = int(num_pages_str.split('=')[1])
+    
+    except:Exception:
+        num_pages_str =  None
     try:
         output = argv[3]
 
@@ -23,13 +28,14 @@ if __name__ == "__main__":
     if output is None:
         with Function(app_key) as function:
             total_size = function.get_size(location)
-            print(function.get_info(location, limit_size))
+            #print(function.get_info(location, limit_size))
             offset = 0
             for i in range(num_pages-1):
                 offset += limit_size
                 if offset >= total_size:
                     break;
-                print(function.get_next_info(location, limit_size, offset))
+                #print(function.get_next_info(location, limit_size, offset))
+                
     else:
         output = output.split("=")[1]
         with Function(app_key) as function, open(output, "w") as fw:
