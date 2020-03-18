@@ -39,6 +39,9 @@ def insert(docs, es):
 if __name__ == "__main__":
     app_key = environ.get("APP_KEY")
     es = create_and_update_index('violation-parking-index', 'vehicle')
+    #print page_size and num_pages
+    page_size_str = argv[1]
+    page_size = int(page_size_str.split('=')[1])
 
     try:
         num_pages_str = argv[2]
