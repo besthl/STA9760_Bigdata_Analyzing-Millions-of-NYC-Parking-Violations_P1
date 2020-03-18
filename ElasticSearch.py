@@ -1,5 +1,5 @@
 from sys import argv
-from src.parkingviolations.api import Service
+from src.OPCV.getdata import Function
 from os import environ
 from elasticsearch import Elasticsearch
 
@@ -53,20 +53,19 @@ if __name__ == "__main__":
     except Exception:
 
     # print(f"page_size={page_size}, num_pages={num_pages}")
-
-    es = Elasticsearch()
-    location = 'nc67-uf89'
+    
+        location = 'nc67-uf89'
 
     with Function(app_key) as function:
         if num_pages is None:
-            docs = service.get_info(location, page_size)
+            docs = function.get_info(location, page_size)
             insert(docs, es)
         else:
-            total_size = service.get_size(location)
+            total_size = function.get_size(location)
             # print(f"total_size={total_size}")
-            docs = service.get_info(location, page_size)
+            docs = function.get_info(location, page_size)
             insert(docs, es)
 
             for i in range(num_pages):       
-                docs = service.get_next_info(location, page_size, offset=i*num_pages)
+                docs = function.get_next_info(location, page_size, offset=i*num_pages)
                 insert(docs, es)
