@@ -11,23 +11,6 @@ def create_and_update_index(index_name, doc_type):
     except Exception:
         pass
 
-    es.indices.put_mapping(
-        index=index_name,
-        doc_type=doc_type,
-        body={
-            doc_type: {
-                "properties": {"issue_date": {"type": "date"},
-                "fine_amount":{"type":"integer"},
-                "penalty_amount":{"type": "integer"},
-                "interest_amount":{"type": "integer"},
-                "reduction_amount":{"type":"integer"},
-                "payment_amount":{"type":"integer"},
-                "amount_due":{"type":"integer"}}
-            }
-        }
-    )
-    
-
     return es
 
 def insert(docs, es):
